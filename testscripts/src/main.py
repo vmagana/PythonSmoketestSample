@@ -14,12 +14,12 @@ import unittest
 from smoketest import smoketest
 
 def main(params):
-        (system_ip,username,pwd,debug_to_file,threadlock)=params
-        logger(debug_to_file)
-        logfile=logging.getLogger('logmain')
+        (system_ip,username,pwd,debug_enabled,thread_lock)=params
+        logger(debug_enabled)
+        logfile=logging.getLogger("logmain")
         logfile.info("*****************START LOG***************************")
 
-        run_test=smoketest(system_ip,username,pwd,debug_to_file,threadlock)
+        run_test=smoketest(system_ip,username,pwd,debug_enabled,thread_lock)
         if run_test.test_move_files() == False:
             return False
         else:
@@ -31,22 +31,22 @@ if __name__ == '__main__':
 
     #init config parser to read all the systems to be tested
     iniparser=ConfigParser.ConfigParser()
-    iniparser.read('systems.ini')
-    number_of_systems=iniparser.getint('config','count')
-    bool_log_to_file=iniparser.getboolean('config','debug')
+    iniparser.read("systems.ini")
+    number_of_systems=iniparser.getint("config","count")
+    debug_enabled=iniparser.getboolean("config","debug")
 
     #create logging object first time
-    logger(bool_log_to_file)
-    logfile=logging.getLogger('logmain')
+    logger(debug_enabled)
+    logfile=logging.getLogger("logmain")
     systems_list=[]
     failures=0
 
     threadpool=multiprocessing.Pool()
-    threadlock=multiprocessing.Manager().Lock()
+    thread_lock=multiprocessing.Manager().Lock()
 
     #loop thru the systems in the ini file
     for i in range(1,number_of_systems+1):
-        systems_list+=[(iniparser.get('s'+str(i),'ip'),iniparser.get('s'+str(i),'username'),iniparser.get('s'+str(i),'pwd'),bool_log_to_file,threadlock)]
+        systems_list+=[(iniparser.get("s"+str(i),"ip"),iniparser.get("s"+str(i),"username"),iniparser.get("s"+str(i),"pwd"),debug_enabled,thread_lock)]
 
     results=threadpool.map(main, systems_list)
     logfile.info("Done running all threads")
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     logfile.info("Getting exit code for threads")
     for (ip,user,pwd,debug_value,tlock),retcode in zip(systems_list,results):
-        logfile.info('%s %s %s %s' % (retcode,ip,user,pwd))
+        logfile.info("%s %s %s %s" % (retcode,ip,user,pwd))
         if retcode == False:
             failures+=1
 
