@@ -31,6 +31,8 @@ class smoketest():
             if self.dut.connect() == False:
                 return False
 
+            self.logfile.info("StartSmokeTest Lines")
+
             self.out=self.dut.send_cmd("ls -la")
             if self.out == False:
                 return False

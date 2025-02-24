@@ -59,6 +59,8 @@ if __name__ == '__main__':
         if retcode == False:
             failures+=1
 
+    logfile.info("One more line")
+    
     if failures != 0:
         logfile.error("There were %s failures in a thread(s), please check log" % failures)
         sys.exit(False)
