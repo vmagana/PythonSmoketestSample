@@ -20,6 +20,19 @@ class smoketest():
             self.thread_lock=thread_lock
             self.project_path="/root/hello_project/"
 
+        def test_sort_files(self):
+            #self.logger(self.debug_enabled)
+            self.logfile=logging.getLogger("logmain")
+            self.logfile.info("*****************START SMOKETEST LOG***************************")
+            self.logfile.info("PID %s" % os.getpid())
+
+        def test_remove_files(self):
+            #self.logger(self.debug_enabled)
+            self.logfile=logging.getLogger("logmain")
+            self.logfile.info("*****************START SMOKETEST LOG***************************")
+            self.logfile.info("PID %s" % os.getpid())
+
+
         def test_move_files(self):
             #self.logger(self.debug_enabled)
             self.logfile=logging.getLogger("logmain")

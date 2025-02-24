@@ -15,6 +15,11 @@ class sshdevice(object):
 
         self.logfile=logging.getLogger("logmain")
 
+    def test_rmove_files(self):
+            #self.logger(self.debug_enabled)
+            self.logfile=logging.getLogger("logmain")
+            self.logfile.info("PID %s" % os.getpid())
+    
     def connect(self):
         self.ssh=paramiko.SSHClient()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
