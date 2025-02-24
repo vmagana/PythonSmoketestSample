@@ -66,5 +66,5 @@ if __name__ == '__main__':
         logfile.info("Done running smoke test, found no failures")
         sys.exit(True)
 
-
+    logfile.error("LAST LINE")
 
